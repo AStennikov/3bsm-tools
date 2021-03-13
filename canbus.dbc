@@ -1,0 +1,39 @@
+
+
+BO_ 1296 encoder1_status: 4 Vector__XXX
+ SG_ target : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ position : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 1297 encoder1_group0: 8 Vector__XXX
+ SG_ Sensor0 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor1 : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor2 : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor3 : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 1298 encoder1_group1: 8 Vector__XXX
+ SG_ Sensor4 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor5 : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor6 : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor7 : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 1299 encoder1_group2: 8 Vector__XXX
+ SG_ Sensor8 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor9 : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor10 : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor11 : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ 
+BO_ 1300 encoder1_group3: 8 Vector__XXX
+ SG_ Sensor12 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor13 : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor14 : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor15 : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 1301 encoder1_group4: 8 Vector__XXX
+ SG_ Sensor16 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor17 : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor18 : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ Sensor19 : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+
+
+
