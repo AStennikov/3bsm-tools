@@ -21,8 +21,14 @@ encoder1 = Encoder()
 encoder2 = Encoder()
 encoder3 = Encoder()
 
+# handles keyboard input
+def on_key_press(event):
+    print(event.key)
+
 # plot setup
 fig = plt.figure()
+fig.canvas.mpl_disconnect(fig.canvas.manager.key_press_handler_id)
+fig.canvas.mpl_connect('key_press_event', on_key_press)
 encoder1.pattern_axis = fig.add_subplot(321)
 encoder1.pattern_axis.set_xlim(0, len(mp.pattern))
 encoder1.pattern_axis.set_ylim(-2048,2048)
@@ -55,7 +61,7 @@ def can_process():
     for msg in bus:
         sensor_CAN[msg.arbitration_id] = msg    # saves raw message in dictionary, to be processed later
 
-        # unlike sensor messages, messages containing pid information must be processed
+        # unlike sensor messages, messages containing pid information must be processed immediately
         if msg.arbitration_id == 0x510:
             dict = db.decode_message(msg.arbitration_id, msg.data)
             encoder1.update_pid(dict.get('target'), dict.get('position'))
@@ -63,10 +69,10 @@ def can_process():
         if program_running == False:
             break
 
-# create and start can message input thread
+
+# create and start can bus message processing thread
 can_msg_input_thread = threading.Thread(target=can_process)
 can_msg_input_thread.start()
-
 
 def update(frame):
     # update sensor data
