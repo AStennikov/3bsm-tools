@@ -44,13 +44,19 @@ encoder1.sensor_position_line.set_ydata([-2048, 2048])
 
 encoder1.pid_axis = fig.add_subplot(322)
 encoder1.pid_axis.set_xlim(0, encoder1.pid_plot_len)
-encoder1.pid_axis.set_ylim(0,len(mp.pattern))
+encoder1.pid_axis.set_ylim(-255,len(mp.pattern))
 encoder1.pid_target_line, = encoder1.pid_axis.plot(0, 0)
 encoder1.pid_target_line.set_xdata(np.arange(encoder1.pid_plot_len))
 encoder1.pid_target_line.set_ydata(encoder1.pid_target_values)
 encoder1.pid_position_line, = encoder1.pid_axis.plot(0, 0)
 encoder1.pid_position_line.set_xdata(np.arange(encoder1.pid_plot_len))
 encoder1.pid_position_line.set_ydata(encoder1.pid_position_values)
+encoder1.pid_pwm_line, = encoder1.pid_axis.plot(0, 0)
+encoder1.pid_pwm_line.set_xdata(np.arange(encoder1.pid_plot_len))
+encoder1.pid_pwm_line.set_ydata(encoder1.pid_pwm_values)
+encoder1.pid_kpi_line, = encoder1.pid_axis.plot(0, 0)
+encoder1.pid_kpi_line.set_xdata(np.arange(encoder1.pid_plot_len))
+encoder1.pid_kpi_line.set_ydata(encoder1.pid_kpi_values)
 
 # dictionary that holds raw CAN messages
 sensor_CAN = {0x510: [], 0x511: [], 0x512: [], 0x513: [], 0x514: [], 0x515: []}
@@ -64,7 +70,7 @@ def can_process():
         # unlike sensor messages, messages containing pid information must be processed immediately
         if msg.arbitration_id == 0x510:
             dict = db.decode_message(msg.arbitration_id, msg.data)
-            encoder1.update_pid(dict.get('target'), dict.get('position'))
+            encoder1.update_pid(dict.get('target'), dict.get('position'), dict.get('pwm'), dict.get('kpi'))
 
         if program_running == False:
             break
@@ -113,8 +119,12 @@ def update(frame):
 
     encoder1.pid_target_line.set_ydata(encoder1.pid_target_values)
     encoder1.pid_position_line.set_ydata(encoder1.pid_position_values)
+    encoder1.pid_pwm_line.set_ydata(encoder1.pid_pwm_values)
+    encoder1.pid_kpi_line.set_ydata(encoder1.pid_kpi_values)
 
-    return encoder1.sensor_line, encoder1.sensor_position_line, encoder1.pid_target_line, encoder1.pid_position_line
+    print('Target: ' + str(encoder1.target) + ', position: ' + str(encoder1.position) + ', pwm: ' + str(encoder1.pwm) + ', kpi: ' + str(encoder1.kpi))
+
+    return encoder1.sensor_line, encoder1.sensor_position_line, encoder1.pid_target_line, encoder1.pid_position_line, encoder1.pid_pwm_line, encoder1.pid_kpi_line
 
 
 

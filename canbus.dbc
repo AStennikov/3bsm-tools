@@ -1,8 +1,10 @@
 
 
-BO_ 1296 encoder1_status: 4 Vector__XXX
+BO_ 1296 encoder1_status: 8 Vector__XXX
  SG_ target : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
  SG_ position : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ pwm : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ kpi : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
 
 BO_ 1297 encoder1_group0: 8 Vector__XXX
  SG_ Sensor0 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
