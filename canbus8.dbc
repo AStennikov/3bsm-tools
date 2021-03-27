@@ -1,0 +1,37 @@
+
+
+BO_ 1296 encoder1_status: 8 Vector__XXX
+ SG_ target : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ position : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ pwm : 32|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ kpi : 48|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 1297 encoder1_group_1_2: 8 Vector__XXX
+ SG_ Sensor0 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor1 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor2 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor3 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor4 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor5 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor6 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor7 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1298 encoder1_group_3_4: 8 Vector__XXX
+ SG_ Sensor8 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor9 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor10 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor11 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor12 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor13 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor14 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor15 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1299 encoder1_group_5: 4 Vector__XXX
+ SG_ Sensor16 : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor17 : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor18 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ Sensor19 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+

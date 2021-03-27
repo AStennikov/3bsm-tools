@@ -8,31 +8,28 @@ print('Which node to calibrate? Enter 1, 2 or 3:')
 node = input()
 message_ids = []
 if node == '1':
-    message_ids = [1297, 1298, 1299, 1300, 1301]
+    message_ids = [1297, 1298, 1299]
 elif node == '2':
-    message_ids = [1313, 1314, 1315, 1316, 1317]
+    message_ids = [1313, 1314, 1315]
 elif node == '3':
-    message_ids = [1329, 1330, 1331, 1332, 1333]
+    message_ids = [1329, 1330, 1331]
 else:
     print('Node ' + node + ' does not exist! Aborted.')
     quit()
-print('How many positions? Enter unsigned integer, 256 or 512 is recommended, [1:1024] range.')
-numberOfPositions = int(input())
-if numberOfPositions < 1 or numberOfPositions > 1024:
-    print(str(numberOfPositions) + ' is illegal! Aborted.')
-    quit()
+
+numberOfPositions = 256
 
 # set up can bus
 bus = can.interface.Bus(bustype='socketcan', channel='can0', bitrate=1000000)
-bus.set_filters([{"can_id": message_ids[0], "can_mask": 0x7ff, "extended": False},
+bus.set_filters([
+{"can_id": message_ids[0], "can_mask": 0x7ff, "extended": False},
 {"can_id": message_ids[1], "can_mask": 0x7ff, "extended": False},
-{"can_id": message_ids[2], "can_mask": 0x7ff, "extended": False},
-{"can_id": message_ids[3], "can_mask": 0x7ff, "extended": False},
-{"can_id": message_ids[4], "can_mask": 0x7ff, "extended": False}])
-db = cantools.db.load_file('canbus.dbc')
+{"can_id": message_ids[2], "can_mask": 0x7ff, "extended": False}
+])
+db = cantools.db.load_file('canbus8.dbc')
 
 # dictionary that holds raw CAN messages
-CAN_messages = {message_ids[0]: [], message_ids[1]: [], message_ids[2]: [], message_ids[3]: [], message_ids[4]: []}
+CAN_messages = {message_ids[0]: [], message_ids[1]: [], message_ids[2]: []}
 
 # function run in a separate thread, reads can messages and stores them in a dictionary
 program_running = True
@@ -50,9 +47,9 @@ can_msg_input_thread.start()
 f = open('sensor_positions.h', 'w')
 f.write('// This sensor position data file is generated with calibrate-via-can.py script.\n')
 f.write('#define POSITION_COUNT ' + str(numberOfPositions) + '\n')
-f.write('#define SENSOR_COUNT 20\n')
+#f.write('#define SENSOR_COUNT 20\n')
 f.write('\n')
-f.write('const uint16_t sensorValueTable[POSITION_COUNT][SENSOR_COUNT] = {\n')
+f.write('const uint32_t sensorValueTable[POSITION_COUNT][5] = {\n')
 
 
 for position in range(numberOfPositions):
@@ -60,12 +57,45 @@ for position in range(numberOfPositions):
     input() # waits for enter, rest of the input string is not needed
 
     # decodes sensor readings from can messages
-    group1 = db.decode_message(CAN_messages[message_ids[0]].arbitration_id, CAN_messages[message_ids[0]].data)
-    group2 = db.decode_message(CAN_messages[message_ids[1]].arbitration_id, CAN_messages[message_ids[1]].data)
-    group3 = db.decode_message(CAN_messages[message_ids[2]].arbitration_id, CAN_messages[message_ids[2]].data)
-    group4 = db.decode_message(CAN_messages[message_ids[3]].arbitration_id, CAN_messages[message_ids[3]].data)
-    group5 = db.decode_message(CAN_messages[message_ids[4]].arbitration_id, CAN_messages[message_ids[4]].data)
+    group_1_2 = db.decode_message(CAN_messages[message_ids[0]].arbitration_id, CAN_messages[message_ids[0]].data)
+    group_3_4 = db.decode_message(CAN_messages[message_ids[1]].arbitration_id, CAN_messages[message_ids[1]].data)
+    group_5 = db.decode_message(CAN_messages[message_ids[2]].arbitration_id, CAN_messages[message_ids[2]].data)
 
+    str1 = ('0x' +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor3'))) +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor2'))) +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor1'))) +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor0'))))
+    str2 = ('0x' +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor7'))) +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor6'))) +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor5'))) +
+    ''.join('{:02X}'.format(group_1_2.get('Sensor4'))))
+    str3 = ('0x' +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor11'))) +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor10'))) +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor9'))) +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor8'))))
+    str4 = ('0x' +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor15'))) +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor14'))) +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor13'))) +
+    ''.join('{:02X}'.format(group_3_4.get('Sensor12'))))
+    str5 = ('0x' +
+    ''.join('{:02X}'.format(group_5.get('Sensor19'))) +
+    ''.join('{:02X}'.format(group_5.get('Sensor18'))) +
+    ''.join('{:02X}'.format(group_5.get('Sensor17'))) +
+    ''.join('{:02X}'.format(group_5.get('Sensor16'))))
+
+    f.write('{' +
+    str1 + ', ' +
+    str2 + ', ' +
+    str3 + ', ' +
+    str4 + ', ' +
+    str5 +
+    '},\n')
+
+'''
     f.write('{' +
     str(group1.get('Sensor0')) + ', ' +
     str(group1.get('Sensor1')) + ', ' +
@@ -88,7 +118,7 @@ for position in range(numberOfPositions):
     str(group5.get('Sensor18')) + ', ' +
     str(group5.get('Sensor19')) +
     '},\n')
-
+'''
 '''
     # update sensor data
     group1 = db.decode_message(sensor_CAN[0x511].arbitration_id, sensor_CAN[0x511].data)
